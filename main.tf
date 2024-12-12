@@ -114,7 +114,7 @@ resource "lamars_mysql_sg" "wordpress_sg" {
 
 # MySQL Instance
 resource "lamars_mysql_server" "mysql_instance" {
-  ami           = "ami-0abcdef1234567890" # Replace with a valid Ubuntu AMI ID
+  ami           = "ami-0e2c8caa4b6378d8c" 
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.lamars_private_subnet.id
   security_groups = [lamars_mysql_sg.mysql_sg.name]
@@ -138,7 +138,7 @@ resource "lamars_mysql_server" "mysql_instance" {
 
 # WordPress Instance
 resource "lamars_wp_server" "wordpress_instance" {
-  ami           = "ami-0abcdef1234567890" # Replace with a valid Ubuntu AMI ID
+  ami           = "ami-0e2c8caa4b6378d8c" 
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.lamars_public_subnet.id
   security_groups = [lamars_mysql_sg.wordpress_sg.name]
@@ -158,4 +158,9 @@ resource "lamars_wp_server" "wordpress_instance" {
   tags = {
     Name = "wordpress-instance"
   }
+}
+
+# Output EC2 instance public IP
+output "public_ip" {
+  value = lamars_wp_server.wordpress_instance.public_ip
 }
